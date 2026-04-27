@@ -1,90 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChronoLink | Global Time Explorer</title>
-    <meta name="description" content="Premium universal time zone planner. Coordinate across 198+ countries with dynamic day/night visuals and smart meeting windows.">
-    
-    <!-- Meta Tags for SEO -->
-    <meta property="og:title" content="ChronoLink | Global Time Explorer">
-    <meta property="og:description" content="Plan meetings across the world with beautiful, time-adaptive visuals.">
-    
+
+    <!-- PRIMARY SEO TITLE -->
+    <title>
+        Time Zone Converter | Meeting Planner | World Clock Tool
+    </title>
+
+    <!-- META DESCRIPTION -->
+    <meta name="description"
+        content="Free time zone converter and global meeting planner. Compare time between countries, find the best meeting hours, convert IST to EST/PST/UK time, and schedule international calls instantly.">
+
+    <!-- KEYWORDS -->
+    <meta name="keywords" content="
+        time zone converter,
+        meeting planner,
+        world clock converter,
+        international meeting planner,
+        country time converter,
+        IST to EST converter,
+        IST to PST converter,
+        India USA time converter,
+        global meeting scheduler,
+        timezone comparison tool,
+        work hour overlap calculator,
+        remote team meeting planner
+        ">
+
+    <meta name="robots" content="index, follow">
+
+    <meta name="author" content="ChronoLink">
+
+    <!-- CANONICAL -->
+    <link rel="canonical" href="https://your-project-name.vercel.app/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Time Zone Converter & Global Meeting Planner">
+
+    <meta property="og:description"
+        content="Compare global time zones instantly with beautiful day/night visuals and smart meeting scheduling.">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://your-project-name.vercel.app/">
+
+    <meta property="og:image" content="https://your-project-name.vercel.app/images/preview.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <meta name="twitter:title" content="Time Zone Converter & Meeting Planner">
+
+    <meta name="twitter:description" content="Find the best meeting time across countries instantly.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.png">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Luxon for Timezones -->
+
+    <!-- Luxon -->
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
-    
-    <!-- Countries and Timezones library -->
+
+    <!-- Countries + Timezones -->
     <script src="https://cdn.jsdelivr.net/gh/manuelmhtr/countries-and-timezones@latest/dist/index.min.js"></script>
-    
-    <!-- Slim Select CSS -->
+
+    <!-- Slim Select -->
     <link href="https://cdn.jsdelivr.net/npm/slim-select@latest/dist/slimselect.css" rel="stylesheet">
-    
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Time Zone Converter",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "description": "Global meeting planner and time zone converter for international teams.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- Dynamic Background Layers -->
+    <!-- Background -->
     <div id="bg-active" class="bg-layer"></div>
     <div id="bg-next" class="bg-layer"></div>
     <div class="overlay"></div>
 
+    <!-- Loader -->
     <div id="loader" class="loader-overlay">
         <div class="spinner"></div>
     </div>
 
+    <!-- Main App -->
     <div class="app-container">
+
         <main class="main-card">
+
+            <!-- Header -->
             <header class="header">
-                <h1>ChronoLink</h1>
-                <p class="subtitle">Visual Time Coordination</p>
+                <h1>Time Zone Converter</h1>
+                <p class="subtitle">
+                    Find the best global meeting time instantly
+                </p>
             </header>
 
+            <!-- Time Cards -->
             <div class="time-grid">
+
                 <div class="time-box">
-                    <img id="flag-home" src="" alt="" class="flag-icon">
-                    <div class="time-label" id="label-home">Home</div>
-                    <div class="time-value" id="time-home">--:--</div>
+                    <img id="flag-home" src="" alt="Home country flag" class="flag-icon">
+
+                    <div class="time-label" id="label-home">
+                        Home Time
+                    </div>
+
+                    <div class="time-value" id="time-home">
+                        --:--
+                    </div>
                 </div>
+
                 <div class="time-box">
-                    <img id="flag-target" src="" alt="" class="flag-icon">
-                    <div class="time-label" id="label-target">Target</div>
-                    <div class="time-value" id="time-target">--:--</div>
+                    <img id="flag-target" src="" alt="Target country flag" class="flag-icon">
+
+                    <div class="time-label" id="label-target">
+                        Target Time
+                    </div>
+
+                    <div class="time-value" id="time-target">
+                        --:--
+                    </div>
                 </div>
+
             </div>
 
+            <!-- Selectors -->
             <div class="input-row">
+
                 <div class="input-group">
-                    <label for="select-home">Home Base</label>
+                    <label for="select-home">
+                        Your Country
+                    </label>
+
                     <select id="select-home"></select>
                 </div>
+
                 <div class="input-group">
-                    <label for="select-target">Target Destination</label>
+                    <label for="select-target">
+                        Other Country
+                    </label>
+
                     <select id="select-target"></select>
                 </div>
+
             </div>
 
+            <!-- Slider -->
             <div class="slider-section">
+
                 <div class="slider-info">
                     <span>12 AM</span>
-                    <span id="slider-current-val" style="color: #fff; font-weight: 600;">--:--</span>
+
+                    <span id="slider-current-val" style="color:white;font-weight:600;">
+                        --:--
+                    </span>
+
                     <span>12 AM</span>
                 </div>
+
                 <input type="range" id="time-slider" min="0" max="1439" value="720">
             </div>
 
+            <!-- Status -->
             <div id="status-badge" class="status-badge">
-                Analyzing window...
+                Finding best meeting window...
             </div>
+
         </main>
+
     </div>
 
-    <!-- Slim Select JS -->
+    <!-- Slim Select -->
     <script src="https://cdn.jsdelivr.net/npm/slim-select@latest/dist/slimselect.min.js"></script>
+
+    <!-- JS -->
     <script src="script.js"></script>
+
 </body>
+
 </html>

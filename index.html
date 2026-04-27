@@ -18,6 +18,12 @@
     <!-- Luxon for Timezones -->
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
     
+    <!-- Countries and Timezones library -->
+    <script src="https://cdn.jsdelivr.net/gh/manuelmhtr/countries-and-timezones@latest/dist/index.min.js"></script>
+    
+    <!-- Slim Select CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/slim-select@latest/dist/slimselect.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,6 +32,10 @@
     <div id="bg-active" class="bg-layer"></div>
     <div id="bg-next" class="bg-layer"></div>
     <div class="overlay"></div>
+
+    <div id="loader" class="loader-overlay">
+        <div class="spinner"></div>
+    </div>
 
     <div class="app-container">
         <main class="main-card">
@@ -73,6 +83,8 @@
         </main>
     </div>
 
+    <!-- Slim Select JS -->
+    <script src="https://cdn.jsdelivr.net/npm/slim-select@latest/dist/slimselect.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

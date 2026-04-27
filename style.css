@@ -230,6 +230,68 @@ input[type=range]::-webkit-slider-thumb {
 .status-neutral { background: rgba(234, 179, 8, 0.15); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.2); }
 .status-bad { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
 
+/* Loader */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-dark);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-left-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Slim Select Dark Theme Overrides */
+.ss-main {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 4px !important;
+  color: #fff !important;
+}
+
+.ss-content {
+  background-color: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+}
+
+.ss-search input {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  color: #fff !important;
+}
+
+.ss-list .ss-option:hover {
+  background-color: var(--primary) !important;
+}
+
+.ss-list .ss-option.ss-selected {
+  background-color: rgba(99, 102, 241, 0.2) !important;
+}
+
+.ss-list .ss-option {
+  color: #fff !important;
+}
+
+.ss-list .ss-optgroup-label {
+  color: var(--text-muted) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
   .main-card { padding: 32px 20px; }

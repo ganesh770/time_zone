@@ -17,6 +17,7 @@ const bgNext = document.getElementById('bg-next');
 let homeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 let targetZone = 'America/New_York';
 let lastPhase = '';
+let ssHome, ssTarget;
 
 // Background Images mapping
 const images = {
@@ -28,86 +29,67 @@ const images = {
 };
 
 /**
- * Get Flag URL for a timezone
- * This is a simplified mapping for major zones. 
- * For a full production app, you'd use a more robust zone-to-country library.
+ * Get Flag URL for a timezone using the ct library
  */
 function getFlagUrl(zone) {
-    const mapping = {
-        'Asia/Kolkata': 'in',
-        'America/New_York': 'us',
-        'Europe/London': 'gb',
-        'Asia/Tokyo': 'jp',
-        'Europe/Paris': 'fr',
-        'Australia/Sydney': 'au',
-        'Asia/Dubai': 'ae',
-        'Asia/Singapore': 'sg',
-        'America/Los_Angeles': 'us',
-        'America/Chicago': 'us',
-        'Europe/Berlin': 'de',
-        'Asia/Shanghai': 'cn',
-        'America/Sao_Paulo': 'br',
-        'Africa/Cairo': 'eg'
-    };
-    
-    // Default to 'un' (United Nations) flag if not in mapping
-    const code = mapping[zone] || 'un';
+    const tz = ct.getTimezone(zone);
+    const code = tz && tz.countries ? tz.countries[0].toLowerCase() : 'un';
     return `https://flagcdn.com/w80/${code}.png`;
 }
 
 /**
- * Populate Timezone Selectors
+ * Populate Timezone Selectors with Grouping
  */
 function populateTimezones() {
-    const zones = Intl.supportedValuesOf('timeZone');
-    
-    // Major cities mapped to countries for better searchability
-    const countryMapping = {
-        'Asia/Kolkata': 'India',
-        'America/New_York': 'USA (EST)',
-        'America/Los_Angeles': 'USA (PST)',
-        'America/Chicago': 'USA (CST)',
-        'Europe/London': 'UK',
-        'Europe/Paris': 'France',
-        'Asia/Tokyo': 'Japan',
-        'Asia/Singapore': 'Singapore',
-        'Australia/Sydney': 'Australia',
-        'Europe/Berlin': 'Germany',
-        'Asia/Dubai': 'UAE',
-        'Asia/Shanghai': 'China',
-        'America/Sao_Paulo': 'Brazil',
-        'Africa/Cairo': 'Egypt'
-    };
+    const countries = ct.getAllCountries();
+    const sortedCountries = Object.values(countries).sort((a, b) => {
+        // Prioritize India at the top
+        if (a.id === 'IN') return -1;
+        if (b.id === 'IN') return 1;
+        return a.name.localeCompare(b.name);
+    });
 
-    // Sort zones so India and common ones are easy to find
-    const sortedZones = [...zones].sort((a, b) => {
-        if (a === 'Asia/Kolkata') return -1;
-        if (b === 'Asia/Kolkata') return 1;
-        return a.localeCompare(b);
+    [selectHome, selectTarget].forEach(select => {
+        select.innerHTML = ''; // Clear existing
+        
+        sortedCountries.forEach(country => {
+            const optgroup = document.createElement('optgroup');
+            optgroup.label = country.name;
+
+            country.timezones.forEach(zone => {
+                const option = document.createElement('option');
+                option.value = zone;
+                
+                // Format city name (e.g., "America/New_York" -> "New York")
+                const parts = zone.split('/');
+                const city = parts[parts.length - 1].replace(/_/g, ' ');
+                
+                option.textContent = city;
+                
+                if (select === selectHome && zone === homeZone) option.selected = true;
+                if (select === selectTarget && zone === targetZone) option.selected = true;
+                
+                optgroup.appendChild(option);
+            });
+            
+            select.appendChild(optgroup);
+        });
     });
-    
-    sortedZones.forEach(zone => {
-        const optionHome = document.createElement('option');
-        const optionTarget = document.createElement('option');
-        
-        const parts = zone.split('/');
-        const city = parts[parts.length - 1].replace(/_/g, ' ');
-        const country = countryMapping[zone] || parts[0];
-        
-        // Format: "India (Kolkata)" or "USA (New York)"
-        const displayName = countryMapping[zone] ? `${country} (${city})` : `${city} (${country})`;
-        
-        optionHome.value = zone;
-        optionHome.textContent = displayName;
-        if (zone === homeZone) optionHome.selected = true;
-        
-        optionTarget.value = zone;
-        optionTarget.textContent = displayName;
-        if (zone === targetZone) optionTarget.selected = true;
-        
-        selectHome.appendChild(optionHome);
-        selectTarget.appendChild(optionTarget);
-    });
+
+    // Initialize/Update SlimSelect
+    if (!ssHome) {
+        ssHome = new SlimSelect({
+            select: '#select-home',
+            settings: { searchPlaceholder: 'Search Country or City...' }
+        });
+        ssTarget = new SlimSelect({
+            select: '#select-target',
+            settings: { searchPlaceholder: 'Search Country or City...' }
+        });
+    } else {
+        ssHome.setData(ssHome.getData()); // Refresh if already exists
+        ssTarget.setData(ssTarget.getData());
+    }
 }
 
 /**
@@ -158,9 +140,16 @@ function update() {
     timeHome.textContent = homeDateTime.toFormat('hh:mm a');
     timeTarget.textContent = targetDateTime.toFormat('hh:mm a');
     
-    // Update Labels with Days
-    document.getElementById('label-home').textContent = homeDateTime.toFormat('ccc, LLL d');
-    document.getElementById('label-target').textContent = targetDateTime.toFormat('ccc, LLL d');
+    // Update Labels with Country (City) + Date
+    const getLabel = (zone, dt) => {
+        const tz = ct.getTimezone(zone);
+        const country = tz && tz.countries ? ct.getCountry(tz.countries[0]).name : 'Global';
+        const city = zone.split('/').pop().replace(/_/g, ' ');
+        return `${country} (${city}) — ${dt.toFormat('ccc, d LLL')}`;
+    };
+
+    document.getElementById('label-home').textContent = getLabel(selectHome.value, homeDateTime);
+    document.getElementById('label-target').textContent = getLabel(selectTarget.value, targetDateTime);
 
     // Flags
     flagHome.src = getFlagUrl(selectHome.value);
@@ -202,3 +191,10 @@ update();
 const initialPhase = getPhase(DateTime.now().setZone(selectTarget.value).hour);
 bgActive.style.backgroundImage = `url(${images[initialPhase]})`;
 lastPhase = initialPhase;
+
+// Hide Loader
+window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    loader.style.opacity = '0';
+    setTimeout(() => loader.style.display = 'none', 500);
+});

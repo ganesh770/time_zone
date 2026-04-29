@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>India to USA Time Converter | IST to US Time</title>
+
+    <meta name="description"
+        content="Convert India time to USA time instantly. Compare India and US working hours with live slider conversion.">
+
+    <link rel="canonical" href="https://time-zone-wheat.vercel.app/india-to-usa-time-converter.html">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, #4f46e5, #0f172a 40%),
+                radial-gradient(circle at bottom right, #06b6d4, #111827 35%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 750px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            color: #cbd5e1;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 35px;
+            box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.35);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .stat-box h3 {
+            font-size: 15px;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .stat-box p {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .slider-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .slider-section h2 {
+            margin-bottom: 20px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            appearance: none;
+            height: 8px;
+            border-radius: 10px;
+            background: linear-gradient(to right, #6366f1, #06b6d4);
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+
+        .time-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .time-card {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .time-card h3 {
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .time-card p {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .time-card:first-child p {
+            color: #38bdf8;
+        }
+
+        .time-card:last-child p {
+            color: #c084fc;
+        }
+
+        .cta-btn {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            background: linear-gradient(to right, #6366f1, #8b5cf6);
+            padding: 16px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+        }
+
+        @media(max-width:768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stats,
+            .time-display {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="hero">
+            <h1>India → USA Time Converter</h1>
+            <p>Compare India time with multiple US time zones instantly</p>
+        </div>
+
+        <div class="card">
+
+            <div class="stats">
+                <div class="stat-box">
+                    <h3>Popular US Zone</h3>
+                    <p>EST</p>
+                </div>
+
+                <div class="stat-box">
+                    <h3>Best Meeting Window</h3>
+                    <p>6:30PM – 10PM IST</p>
+                </div>
+            </div>
+
+            <div class="slider-section">
+                <h2>India → USA (EST) Live Converter</h2>
+                <input type="range" min="0" max="23" value="12" id="slider">
+            </div>
+
+            <div class="time-display">
+
+                <div class="time-card">
+                    <h3>India (IST)</h3>
+                    <p id="istTime">12:00</p>
+                </div>
+
+                <div class="time-card">
+                    <h3>USA (EST)</h3>
+                    <p id="usaTime">01:30</p>
+                </div>
+
+            </div>
+
+            <a href="/" class="cta-btn">
+                Use Full Interactive Planner
+            </a>
+
+        </div>
+    </div>
+
+    <script>
+        const slider = document.getElementById("slider");
+        const istTime = document.getElementById("istTime");
+        const usaTime = document.getElementById("usaTime");
+
+        function updateTime() {
+            let ist = parseInt(slider.value);
+
+            let usaHour = ist - 10;
+
+            if (usaHour < 0) {
+                usaHour += 24;
+            }
+
+            istTime.innerText =
+                String(ist).padStart(2, '0') + ":00";
+
+            usaTime.innerText =
+                String(usaHour).padStart(2, '0') + ":30";
+        }
+
+        slider.addEventListener("input", updateTime);
+        updateTime();
+    </script>
+
+</body>
+
+</html>

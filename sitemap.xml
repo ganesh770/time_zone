@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/</loc>
+  </url>
+
+  <!-- IST Pages -->
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/ist-to-cet-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/ist-to-est-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/ist-to-pst-converter.html</loc>
+  </url>
+
+  <!-- Reverse US timezone pages -->
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/est-to-ist-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/pst-to-ist-converter.html</loc>
+  </url>
+
+  <!-- India → Country -->
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/india-to-usa-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/india-to-uk-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/india-to-canada-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/india-to-australia-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/india-to-dubai-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/india-to-singapore-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/india-to-germany-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/india-to-japan-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/india-to-saudi-arabia-time-converter.html</loc>
+  </url>
+
+  <!-- Country → India -->
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/usa-to-india-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/uk-to-india-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/canada-to-india-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/australia-to-india-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/dubai-to-india-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/singapore-to-india-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/japan-to-india-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/germany-to-india-time-converter.html</loc>
+  </url>
+
+  <url>
+    <loc>https://time-zone-wheat.vercel.app/saudi-arabia-to-india-time-converter.html</loc>
+  </url>
+
+</urlset>
